@@ -1,0 +1,35 @@
+{
+  "name": "happyauth",
+  "version": "0.1.0",
+  "description": "Application for authentication and authorization",
+  "main": "server.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlejoJamC/HappyAuth.git"
+  },
+  "keywords": [
+    "Oauth2",
+    "Oauth2.0",
+    "REST",
+    "API",
+    "NodeJS",
+    "Javascript",
+    "Express"
+  ],
+  "author": "@AlejoJamC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlejoJamC/HappyAuth/issues"
+  },
+  "homepage": "https://github.com/AlejoJamC/HappyAuth#readme",
+  "dependencies": {
+    "express": "^4.12.4",
+    "mongoose": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.3.7"
+  }
+}
