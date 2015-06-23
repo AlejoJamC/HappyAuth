@@ -2,6 +2,10 @@
 
 Application for authentication and authorization
 
+## Translations ##
+
++ [Español](/assets/translations/README_es_CO.md) - [Documentación](/assets/docs/ES/)
+
 ## Folder structure ##
 
 + assets | Here are stored the files relevant to API operation
@@ -12,7 +16,6 @@ Application for authentication and authorization
 + routes | Contains the logic, procedures and functions
 
 //Note: server.js  Web service entry point ( executable )
-
 
 ## General conventions ##
 
@@ -42,11 +45,9 @@ Example:
 > + [PUT] /v1/users/1
 > + [DELETE] /v1/users/1
 
-
 ### Documentation ###
 
-[Users](/assets)
-
+[Users](/assets/users.md)
 
 
 ## Allowed HTTP methods ##

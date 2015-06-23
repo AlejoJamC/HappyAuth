@@ -6,8 +6,8 @@ var express = require('express');
 // Create our express application
 var app = express();
 
-// Use our environment defined port or 3000
-var port = process.env.PORT || 3000;
+// Use our environment defined port or 7000
+var port = process.env.PORT || 7000;
 
 // Create our Express router
 var router  = express.Router();
