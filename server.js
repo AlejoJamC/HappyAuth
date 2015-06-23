@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
 });
 
 // Register all our routes with /api
-app.use('/api', router);
+app.use('/v0', router);
 
 // Start the server
 app.listen(port);

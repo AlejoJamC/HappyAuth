@@ -2,6 +2,14 @@
 
 Application for authentication and authorization
 
+## Physical tiers and deployment ##
+
+OAuth server
+Subdomain name: auth.example.com
+
+REST server
+Subdomain name: api.example.com
+
 ## Translations ##
 
 + [Español](/assets/translations/README_es_CO.md) - [Documentación](/assets/docs/ES/)
