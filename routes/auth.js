@@ -68,11 +68,11 @@ passport.use(new BearerStrategy(
             }
 
             // No token found
-            if(!toke){
+            if(!token){
                 return callback(null, false);
             }
 
-            user.findOne({ _id : token.idUser }, function (err, user) {
+            Users.findOne({ _id : token.idUser }, function (err, user) {
                 // Check for errors and send a message
                 if(err){
                     callback(err);

@@ -69,7 +69,7 @@ server.exchange(oauth2orize.exchange.code(function (client, code, redirectUri, c
             }
 
             // Create a new access token
-            var token = new token({
+            var token = new Token({
                 value : uid(256),
                 idClient : authCode.idClient,
                 idUser : authCode.idUser
@@ -89,6 +89,7 @@ server.exchange(oauth2orize.exchange.code(function (client, code, redirectUri, c
 }));
 
 // User authorization endpoint
+// ENDPOINT: /oauth2/authorize METHOD: GET
 exports.authorization = [
     server.authorization(function (idClient, redirectUri, callback) {
         Client.findOne({ id : idClient }, function (err, client) {
@@ -101,7 +102,7 @@ exports.authorization = [
     }),
     function (req, res) {
         res.render('dialog', {
-            IDTransaction : req.oauth2.IDTransaction,
+            transactionID : req.oauth2.transactionID,
             user : req.user,
             client : req.oauth2.client
         })
@@ -109,11 +110,13 @@ exports.authorization = [
 ];
 
 // User decision endpoint
+// ENDPOINT: /oauth2/authorize METHOD: POST
 exports.decision = [
     server.decision()
 ];
 
 // Application client token exchange endpoint
+// ENDPOINT: /oauth2/token METHOD: GET
 exports.token = [
     server.token(),
     server.errorHandler()
