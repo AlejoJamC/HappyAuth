@@ -4,8 +4,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var session = require('express-session');
 // TODO: Enviar la configuracion de conexion a base de datos a un archivo de configuracion
 var mongoose = require('mongoose');
+
+// Development packages
+var ejs = require('ejs');
 
 // Choose the environment of work
 var environment = 'devLocal';
@@ -23,6 +27,16 @@ app.use(bodyParser.urlencoded({
 // Use the passport package in our application
 app.use(passport.initialize());
 
+// Development - Set view engine to ejs
+app.set('view engine', 'ejs');
+
+// Use express session support since OAuth2orize requires it
+app.use(session({
+    secret : 'super secret session hey',
+    saveuninitialized : true,
+    resave : true
+}));
+
 /**
  * ROUTER
  */
@@ -33,6 +47,7 @@ var router  = express.Router();
 var userRoutes = require('./routes/users');
 var authRoutes = require('./routes/auth');
 var clientRoutes = require('./routes/clients');
+var oauth2Routes = require('./routes/oauth2');
 
 // -----------------------------------
 //Create endpoints handlers for /users
@@ -52,6 +67,18 @@ router.route('/clients')
     .post(authRoutes.isAuthenticated, clientRoutes.postClients)
     .get(authRoutes.isAuthenticated, clientRoutes.getClients);
 // /users/:id
+// -----------------------------------
+
+// -----------------------------------
+//Create endpoints handlers for authorization of clients
+// /oauth2/authorize
+router.route('/oauth2/authorize')
+    .post(authRoutes.isAuthenticated, oauth2Routes.decision)
+    .get(authRoutes.isAuthenticated, oauth2Routes.authorization);
+//Create endpoints handlers to create tokens
+// /oauth2/token
+router.route('/oauth2/token')
+    .post(authRoutes.isClientAuthenticated, oauth2Routes.token);
 // -----------------------------------
 /**
  * ===============================================
