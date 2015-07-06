@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 // TODO: Enviar la configuracion de conexion a base de datos a un archivo de configuracion
 var mongoose = require('mongoose');
 
@@ -19,16 +20,30 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// Use the passport package in our application
+app.use(passport.initialize());
+
+
 /**
  * ROUTER
  */
 // Create our Express router
 var router  = express.Router();
 
-// http://localhost:3000/api
-router.get('/', function(req, res) {
-    res.json({ message: 'Your API is running!' });
-});
+// Declare all routes
+var userRoutes = require('./routes/users');
+var authRoutes = require('./routes/auth');
+
+// -----------------------------------
+//Create endpoints handlers for /users
+// /users
+router.route('/users')
+    .post(userRoutes.postUsers)
+    .get(authRoutes.isAuthenticated, userRoutes.getUsers);
+// /users/:id
+router.route('/users/:id')
+    .get(authRoutes.isAuthenticated, userRoutes.getUserById);
+// -----------------------------------
 /**
  * ===============================================
  */
