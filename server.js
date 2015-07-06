@@ -23,7 +23,6 @@ app.use(bodyParser.urlencoded({
 // Use the passport package in our application
 app.use(passport.initialize());
 
-
 /**
  * ROUTER
  */
@@ -33,6 +32,7 @@ var router  = express.Router();
 // Declare all routes
 var userRoutes = require('./routes/users');
 var authRoutes = require('./routes/auth');
+var clientRoutes = require('./routes/clients');
 
 // -----------------------------------
 //Create endpoints handlers for /users
@@ -43,6 +43,15 @@ router.route('/users')
 // /users/:id
 router.route('/users/:id')
     .get(authRoutes.isAuthenticated, userRoutes.getUserById);
+// -----------------------------------
+
+// -----------------------------------
+//Create endpoints handlers for /clients
+// /users
+router.route('/clients')
+    .post(authRoutes.isAuthenticated, clientRoutes.postClients)
+    .get(authRoutes.isAuthenticated, clientRoutes.getClients);
+// /users/:id
 // -----------------------------------
 /**
  * ===============================================
