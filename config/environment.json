@@ -1,0 +1,19 @@
+{
+  "devLocal": {
+    "nosqlDatabase":"happyauth",
+    "port": 7000,
+    "version": "/v0"
+  },
+
+  "devServer": {
+    "nosqlDatabase":"happyauth",
+    "port": 7000,
+    "version": "/v0"
+  },
+
+  "production": {
+    "nosqlDatabase":"happyauth",
+    "port": 7000,
+    "version": "/v1"
+  }
+}
