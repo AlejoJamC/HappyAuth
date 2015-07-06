@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>HappyAuth</title>
+</head>
+<body>
+    <p>Hi <%= user.email %>!</p>
+    <p><b><%= client.name %></b> is requuesting <b>full access</b> to your account.</p>
+    <p>Do you approve?</p>
+
+    <form action="/v0/oauth2/authorize" method="post">
+        <input name="idTransaction" type="hidden" value="<%= IDTransaction %>">
+        <div>
+            <input type="submit" value="Allow" id="allow">
+            <input type="submit" value="Deny" name="cancel" id="deny">
+        </div>
+    </form>
+</body>
+</html>
