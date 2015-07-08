@@ -19,9 +19,11 @@ Subdomain name: api.example.com
 + assets | Here are stored the files relevant to API operation
     * docs | Documentation of every entity, router, imports, package or libraries that was created by us.
 
++ config | Configuration files
+
 + models | Data persistence layer (aka entities | databases documents )
 
-+ routes | Contains the logic, procedures and functions
++ routes | Business layer, Contains the logic, procedures and functions
 
 //Note: server.js  Web service entry point ( executable )
 
