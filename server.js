@@ -33,8 +33,8 @@ app.set('view engine', 'ejs');
 // Use express session support since OAuth2orize requires it
 app.use(session({
     secret : 'super secret session hey',
-    saveuninitialized : true,
-    resave : true
+    resave : true,
+    saveuninitialized : true
 }));
 
 /**
@@ -94,4 +94,5 @@ app.use(config.version, router);
 
 // Start the server
 app.listen(port);
+// TODO: evitar o arreglar el mensaje de "express-session deprecated"
 console.log('API running on http://localhost:' + port + config.version + '/');
