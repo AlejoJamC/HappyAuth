@@ -2,15 +2,16 @@
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
 var BearerStrategy = require('passport-http-bearer').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 
 // Load required models
-var Users = require('../models/users');
+var User = require('../models/users');
 var Client = require('../models/clients');
 var Token = require('../models/tokens');
 
 passport.use(new BasicStrategy(
     function (email, password, callback) {
-        Users.findOne({email : email}, function (err, user) {
+        User.findOne({email : email}, function (err, user) {
             // Check for errors and send a message
             if(err){
                 callback(err);
@@ -91,6 +92,40 @@ passport.use(new BearerStrategy(
     }
 ));
 
-exports.isAuthenticated = passport.authenticate(['basic', 'bearer'], { session : false});
+passport.use(new LocalStrategy({
+        usernameField : 'email',
+        passwordField : 'pass'
+    },
+    function (email, password, callback) {
+        User.findOne({ email : email }, function (err, user) {
+            if(err){
+                return callback(err);
+            }
+
+            // No user found with tat email
+            if(!user){
+                return callback(null, false);
+            }
+
+            // Make sure the password is correct
+            user.verifyPassword(password, function (err, isMatch) {
+                if(err){
+                    return callback(err);
+                }
+
+                // Password did not match
+                if(!isMatch){
+                    return callback(null, false);
+                }
+
+                // Success
+                return callback(null, user);
+            })
+        });
+    }
+));
+
+//exports.isAuthenticated = passport.authenticate(['basic', 'bearer'], { session : false});
+exports.isAuthenticated = passport.authenticate(['local', 'bearer'], { session : false });
 exports.isClientAuthenticated = passport.authenticate('client-basic', { session : false});
 exports.isBearerAuthenticated = passport.authenticate('bearer', { session : false});
