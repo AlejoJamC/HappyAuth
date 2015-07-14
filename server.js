@@ -5,6 +5,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
+var routes = require('./routes/routes');
 var logger = require('./config/logger');
 // TODO: Enviar la configuracion de conexion a base de datos a un archivo de configuracion
 var mongoose = require('mongoose');
@@ -54,53 +55,12 @@ app.use(session({
     saveuninitialized : true
 }));
 
-// TODO: sacar todas las rutas a un archivo independiente
-/**
- * ROUTER
- */
+// ROUTER
 // Create our Express router
-var router  = express.Router();
+var router = express.Router();
 
-// Declare all routes
-var userRoutes = require('./routes/users');
-var authRoutes = require('./routes/auth');
-var clientRoutes = require('./routes/clients');
-var oauth2Routes = require('./routes/oauth2');
-
-// -----------------------------------
-//Create endpoints handlers for /users
-// /users
-router.route('/users')
-    .post(userRoutes.postUsers)
-    .get(authRoutes.isAuthenticated, userRoutes.getUsers);
-// /users/:id
-router.route('/users/:id')
-    .get(authRoutes.isAuthenticated, userRoutes.getUserById);
-// -----------------------------------
-
-// -----------------------------------
-//Create endpoints handlers for /clients
-// /users
-router.route('/clients')
-    .post(authRoutes.isAuthenticated, clientRoutes.postClients)
-    .get(authRoutes.isAuthenticated, clientRoutes.getClients);
-// /users/:id
-// -----------------------------------
-
-// -----------------------------------
-//Create endpoints handlers for authorization of clients
-// /oauth2/authorize
-router.route('/oauth2/authorize')
-    .post(authRoutes.isAuthenticated, oauth2Routes.decision)
-    .get(authRoutes.isAuthenticated, oauth2Routes.authorization);
-//Create endpoints handlers to create tokens
-// /oauth2/token
-router.route('/oauth2/token')
-    .post(authRoutes.isClientAuthenticated, oauth2Routes.token);
-// -----------------------------------
-/**
- * ===============================================
- */
+// Setup all routes on express router
+routes.setupRouter(router);
 
 // Use our environment defined port or value on our config file /config/environment.json
 var port = process.env.PORT || config.port;
