@@ -1,2 +1,9 @@
+# Webstorm config files
 .idea/
+
+# Dependency directory
 node_modules/
+
+# Logging files
+logs/
+*.log

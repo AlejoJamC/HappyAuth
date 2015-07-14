@@ -5,6 +5,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
+var logger = require('./config/logger');
 // TODO: Enviar la configuracion de conexion a base de datos a un archivo de configuracion
 var mongoose = require('mongoose');
 
@@ -13,8 +14,17 @@ var ejs = require('ejs');
 
 // Choose the environment of work
 var environment = 'devLocal';
+logger.info('Chose the work environment: ' + environment);
 var config = require('./config/environment.json')[environment];
+logger.info('API version: ' + config.version);
 mongoose.connect('mongodb://localhost:27017/' + config.nosqlDatabase);
+logger.info('Connecting to MongoDB server, database: ' + config.nosqlDataBase);
+
+// Mongoose connection logger
+var con = mongoose.connection;
+con.once('open', function () {
+    logger.info('Connected to MongoDB successfully!');
+});
 
 // Create our express application
 var app = express();
@@ -37,6 +47,7 @@ app.use(session({
     saveuninitialized : true
 }));
 
+// TODO: sacar todas las rutas a un archivo independiente
 /**
  * ROUTER
  */
@@ -95,4 +106,4 @@ app.use(config.version, router);
 // Start the server
 app.listen(port);
 // TODO: evitar o arreglar el mensaje de "express-session deprecated"
-console.log('API running on http://localhost:' + port + config.version + '/');
+logger.info('API running on http://localhost:' + port + config.version + '/');
