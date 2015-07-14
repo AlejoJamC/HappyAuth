@@ -34,6 +34,13 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// Set header 'X-Powered-By'
+logger.info('API powered by: HappyAuth - @AlejoJamC');
+app.use(function (req, res, next) {
+    res.set('X-Powered-By', 'HappyAuth - @AlejoJamC');
+    next();
+});
+
 // Use the passport package in our application
 app.use(passport.initialize());
 
